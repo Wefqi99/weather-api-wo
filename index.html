@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API Application</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="searchbox" >
+
+    <h1 id="city">City</h1>
+    <h2 id="temp">Temp</h2>
+
+    <script>
+        var searchValue = document.querySelector('#searchbox');
+        searchValue.addEventListener('keypress', setFunc);
+        function setFunc(e) {
+            if (e.keyCode == 13) {
+                getData(searchValue.value);
+            }
+        }
+
+        function getData(value) {
+            var key = '592f709bed25a7aab1c84e3b1a8003d6'
+            fetch('http://api.openweathermap.org/data/2.5/weather?q=' + value + '&APPID=a9eff5f8f1a01667eb2b62477fe5828e&units=imperial')
+            .then(function (response) {
+                console.log(response)
+                return response.json();
+            })
+            .then(function (weather) {
+                document.querySelector('#city').innerHTML = weather.name;
+                document.querySelector('#temp').innerHTML = weather.main.temp;
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+
+        }
+    </script>
+</body>
+</html>
