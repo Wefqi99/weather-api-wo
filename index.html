@@ -9,15 +9,35 @@
         body {
             font-family: 'Verdana', sans-serif;
             text-align: center;
+            background-color: lightblue;
+        }
+
+        .card {
+            border-style: solid;
+            background-color: yellow;
+        }
+
+        .inputBox{
+            padding-bottom: 50px;
+        }
+
+        body {
+            padding-right: 250px;
+            padding-left: 250px;
         }
     </style>
 </head>
 
 <body>
-    <input type="text" id="searchbox" >
-
-    <h1 id="city">City</h1>
-    <h2 id="temp">Temp</h2>
+    <div class="inputBox">
+        <input type="text" id="searchbox" >
+    </div>
+    <div class="card">
+        <h1 id="city">Enter Location</h1>
+        <h1 id="temp"></h1>
+        <h1 id="feels"></h1>
+        <h1 id="des"></h1>
+    </div>
 
     <script>
         var searchValue = document.querySelector('#searchbox');
@@ -36,11 +56,18 @@
                 return response.json();
             })
             .then(function (weather) {
-                document.querySelector('#city').innerHTML = weather.name;
-                document.querySelector('#temp').innerHTML = weather.main.temp;
+                document.querySelector('#city').innerHTML = 'Location: ' + weather.name;
+                document.querySelector('#temp').innerHTML = 'Temperature: ' + weather.main.temp + '°f';
+                document.querySelector('#feels').innerHTML = 'Feels Like: ' + weather.main.feels_like  + '°f';
+                document.querySelector('#des').innerHTML = 'Humidity : ' + weather.main.humidity + '%';
             })
             .catch(function (err) {
                 console.log(err);
+                document.querySelector('#city').innerHTML = 'Enter Different Location'
+                document.querySelector('#temp').innerHTML = ''
+                document.querySelector('#feels').innerHTML = ''
+                document.querySelector('#des').innerHTML = ''
+
             })
 
         }
